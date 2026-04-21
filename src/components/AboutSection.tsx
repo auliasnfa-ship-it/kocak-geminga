@@ -1,90 +1,122 @@
-import { motion } from 'framer-motion';
-import { Code2, Video, Coffee, Rocket } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpen, Target, Heart, Briefcase, Calendar, Quote } from 'lucide-react';
+
+const bioData = [
+  {
+    title: 'Profil Pribadi',
+    desc: 'Lahir pada 21 April 2011 di Aceh Besar. Saat ini saya menjalani masa remaja dengan fokus mengembangkan diri.',
+    quote: 'Mimpi adalah kompas hidup.',
+    icon: Calendar,
+    color: 'from-orange-400 to-red-500'
+  },
+  {
+    title: 'Pendidikan',
+    desc: 'Siswa kelas X-11 di MAN 1 Banda Aceh. Sedang menempuh jalur persiapan untuk sekolah kedinasan.',
+    quote: 'Belajar adalah investasi terbaik.',
+    icon: BookOpen,
+    color: 'from-blue-400 to-indigo-600'
+  },
+  {
+    title: 'Cita-Cita',
+    desc: 'Bercita-cita menjadi perwira polisi untuk mengabdi pada negara dan menjaga keamanan masyarakat.',
+    quote: 'Disiplin adalah kunci sukses.',
+    icon: Target,
+    color: 'from-red-400 to-rose-600'
+  },
+  {
+    title: 'Hobi',
+    desc: 'Sangat menyukai olahraga badminton untuk melatih ketangkasan, kesehatan, dan sportivitas.',
+    quote: 'Tubuh kuat, jiwa sehat.',
+    icon: Heart,
+    color: 'from-pink-400 to-purple-600'
+  },
+];
 
 export default function AboutSection() {
-  const stats = [
-    { icon: Code2, value: '50+', label: 'Projects Selesai' },
-    { icon: Video, value: '100+', label: 'Video Konten' },
-    { icon: Coffee, value: '1000+', label: 'Cangkir Kopi' },
-    { icon: Rocket, value: '5+', label: 'Tahun Pengalaman' },
-  ];
+  const [cards, setCards] = useState(bioData);
+
+  const shiftCard = () => {
+    setCards((prevCards) => {
+      const newCards = [...prevCards];
+      const movedCard = newCards.shift();
+      newCards.push(movedCard);
+      return newCards;
+    });
+  };
+
+  const activeCard = cards[0];
 
   return (
-    <section id="about" className="py-20 md:py-32 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-medium mb-2 block">Tentang Saya</span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            Mengenal Lebih Dekat
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="relative">
-              <div className="aspect-square rounded-2xl overflow-hidden glass shadow-card">
-                <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <span className="text-8xl">👨‍💻</span>
-                </div>
-              </div>
-              <div className="absolute -bottom-6 -right-6 p-4 glass rounded-xl shadow-card">
-                <p className="font-display font-bold text-2xl text-gradient">5+ Tahun</p>
-                <p className="text-sm text-muted-foreground">Pengalaman</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <h3 className="font-display text-2xl md:text-3xl font-bold">
-              Passionate Developer &amp; Creator
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Saya adalah seorang Fullstack Web Developer dengan passion yang kuat dalam menciptakan 
-              solusi digital yang inovatif. Dengan pengalaman lebih dari 5 tahun, saya telah 
-              membantu berbagai klien dan perusahaan dalam mewujudkan ide-ide mereka menjadi 
-              aplikasi web yang powerful dan user-friendly.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Selain coding, saya juga aktif sebagai Content Creator, berbagi pengetahuan 
-              tentang pemrograman dan teknologi melalui berbagai platform. Saya percaya bahwa 
-              berbagi ilmu adalah cara terbaik untuk terus belajar dan berkembang.
-            </p>
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="p-4 glass rounded-xl text-center hover:shadow-card-hover transition-shadow"
-                >
-                  <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="font-display text-2xl font-bold">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+    <section id="about" className="py-24 bg-background overflow-hidden">
+      <div className="container mx-auto px-6">
+        
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4 tracking-tight">About Me</h2>
+          <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
         </div>
+
+        {/* Layout Utama: Flex Row untuk Desktop, Column untuk Mobile */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
+          
+          {/* Sisi Kiri: Kata Motivasi (Dynamic) */}
+          <motion.div 
+            key={activeCard.title}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex-1 max-w-sm text-center md:text-left"
+          >
+            <Quote className="h-10 w-10 text-primary mx-auto md:mx-0 mb-6 opacity-50" />
+            <h3 className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-4">
+              {activeCard.title}
+            </h3>
+            <p className="text-2xl md:text-3xl font-medium italic text-foreground leading-snug">
+              "{activeCard.quote}"
+            </p>
+          </motion.div>
+
+          {/* Sisi Kanan: Tumpukan Kartu */}
+          <div className="relative w-full max-w-[350px] h-[350px]">
+            <AnimatePresence mode="popLayout">
+              {cards.map((item, index) => {
+                const isTop = index === 0;
+                return (
+                  <motion.div
+                    key={item.title}
+                    style={{ zIndex: cards.length - index }}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{
+                      scale: 1 - index * 0.05,
+                      y: index * 15,
+                      opacity: isTop ? 1 : 0.6,
+                    }}
+                    exit={{ x: 300, opacity: 0, rotate: 20 }}
+                    drag={isTop ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    onDragEnd={(e, info) => {
+                      if (info.offset.x > 100 || info.offset.x < -100) {
+                        shiftCard();
+                      }
+                    }}
+                    className={`absolute inset-0 p-8 rounded-[2rem] glass border border-white/10 shadow-2xl flex flex-col justify-center bg-white/5 backdrop-blur-md cursor-grab active:cursor-grabbing`}
+                  >
+                    <div className={`p-4 rounded-2xl bg-gradient-to-br w-fit mb-6 shadow-md ${item.color} text-white`}>
+                      <item.icon className="h-7 w-7" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <p className="mt-16 text-center text-muted-foreground text-sm animate-pulse">
+          ← Geser kartu ke samping →
+        </p>
       </div>
     </section>
   );
